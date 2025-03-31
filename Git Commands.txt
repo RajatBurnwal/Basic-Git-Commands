@@ -1,0 +1,97 @@
+Git Commands
+-------------
+
+i. To initialize the project i.e., to create a local repository (one time process)
+
+	git init
+
+ii. Git configuration (important for identifying authors)(one time process -- globally)
+
+	git config --global user.name username
+	git config --global user.email usermail
+
+iii. Adding files to local repository
+
+	git add filename  (for specific file)
+	git add .	  (for adding all the unstaged/untracked files)
+
+iv. Commit operation i.e., act of saving changes to local repository or snapshot of project's file system
+
+	git commit -m "commit message"		(commit should always have a commit message)
+
+v. Connecting remote repository (git repo) to local repo
+
+	git remote add origin GithubRepoUrl		(origin is just like a name which will act like a folder to store and carry the files to github, we can have any name)
+
+vi. Push operation
+
+	git push origin master		(pushing the project to master branch in GitHub, either it can be master or main)
+
+vii. To clone a project from git repository
+
+	git clone GitRepoUrl
+
+viii. To create a branch
+
+	git branch branchname
+
+ix. To list all the branches which is present in a project in working directory (active one will be highlighted)
+
+	git branch
+
+x. To switch to a branch
+
+	git switch branchname
+
+xi. To push a branch from local repo to git repo
+
+	git push origin branchname
+
+xii. For merging a branch to master in local repository, first switch to master branch
+
+	git merge branchname
+
+xiii. To list all the branches present in local repository
+
+	git branch -r
+
+xiv. After cloning any project to local repository, again we have to do the configuration to perform commit and push operation from that system
+
+	git config user.name username
+	git config user.email usermail
+
+xv. To get the branches too from the remote repository after cloning the project (just switch to that branch)
+
+	git switch branchname
+
+xvi. To perform Pull operation
+
+	git pull origin master		(sometimes it can be main in GitHub so in place of master we will use main)
+
+xvii. To check the status of the file which is added to local repository from the working directory, status of staged and unstaged changes
+
+	git status
+
+xviii. To get  the details of the commit (or commit history) with details (like commit id, etc)
+
+	git log
+
+xix. With git log we have other options
+
+	git log --oneline	-->	gives detail of commit history in one line
+
+	git log --graph		-->	graphical representation (useful to view branches and merges)
+
+	git log --since="2024-12-24"	-->	shows commit history after this date
+
+xx. To view the remote connection (after remote connection is done) associated with the local repository
+
+	git remote -v
+
+xxi. To remove remote connection i.e., to disconnect the GitHub repository from local repository (it is done if we want to connect to other remote repo)
+
+	git remote remove origin
+
+
+
+https://github.com/RajatBurnwal/Basic-Git-Commands.git
