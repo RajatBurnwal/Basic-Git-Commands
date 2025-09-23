@@ -168,12 +168,36 @@ xxv. To get the difference in the content of the file
 	git diff --staged file1.txt		(same as above)
 	git diff commitID file1.txt		(compares working directory with a specific commit for the given file)
 	git diff --staged commitID file1.txt	(compares staging area and specific commit for file1.txt)
-	git diff commitID1 commitID2 file1.txt	(compares between two specified commits for the given file)
+	git diff commitID1 commitID2 file1.txt	(compares between two specified commits for the given file)(commitID1 -> source copy, commitID2 -> destination copy)
 	git diff HEAD HEAD~1 file1.txt		(compares between last commit -> HEAD and second last commit -> HEAD~1)
 	git diff master ATE			(compares content between 2 branches master & ATE, here ATE is a branch)
-	git diff master origin/master		(compares content between local repository and remote repository) 
+	git diff origin/master master		(compares content between local repository and remote repository)(origin/master -> source copy, master -> destination copy) 
 
 	If we don't mention filename, it compares all files which has changes
+
+xxvi. To remove files from different areas (only in working directory and staging area)(after any "git rm" command we have to perform commit operation to record the deletion in the repo)
+
+	git rm filename				(remove file from both staging area and working directory)
+	git rm file1.txt			(file1.txt will be removed from both WD and SA)
+	
+	*If we simply use git rm without any filename, it will throw an error showing as fatal, Which files should i remove?*
+
+	git rm .				(it will not remove all files, instead will show as error)
+	git rm -r				(it will remove all files)
+	git rm --cached filename		(the file will be removed only from the staging area but not from working directory)
+	rm filename				(Linux command -> the file will be removed only from working directory but not from staging area (if  staged))
+
+xxvii. To discard changes in the working directory or unstage files from staging
+
+	git restore filename			(discard all edits in WD and matches with the previous commit only when the new changes are not committed)
+	git restore --staged filename		(removes the file from staging area but local changes in the WD remains)
+	git restore .				(discard all the changes done in the working directory for the tracked files)
+
+xxviii. To show last commit on the master branch or any commit
+
+	git show master				(Show me details (commit message + changes) of the latest commit on the master branch)
+	git show commitID			(Show me details (commit message + changes) of the commit for the commit ID)
+
 
 
 https://github.com/RajatBurnwal/Basic-Git-Commands.git
