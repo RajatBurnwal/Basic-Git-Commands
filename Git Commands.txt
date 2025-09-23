@@ -5,55 +5,69 @@ i. To initialize the project i.e., to create a local repository (one time proces
 
 	git init
 
-ii. Git configuration (important for identifying authors)(one time process -- globally)
+ii. Git configuration (important for identifying authors)(one time process -- globally throughout that system)
 
 	git config --global user.name username
 	git config --global user.email usermail
 
-iii. Adding files to local repository
+iii. Git configuration (important for identifying authors)(one time process -- locally for that directory)
 
-	git add filename  (for specific file)
-	git add .	  (for adding all the unstaged/untracked files)
+	git config user.name username
+	git config user.email usermail
 
-iv. Commit operation i.e., act of saving changes to local repository or snapshot of project's file system
+iv. Adding files to local repository
+
+	git add filename			(for specific file)
+	git add file1.txt file2.java		(it will add 2 files)(multiple files can be added)
+	git add .	  			(for adding all the unstaged/untracked files)
+	git add *.txt	  			(for adding all the files with .txt extension)
+	git add *.txt *.java    		(for adding all the txt file and java file)
+
+v. Commit operation i.e., act of saving changes to local repository or snapshot of project's file system (For every commit, git records author name and email id, timestamp, commit message)
 
 	git commit -m "commit message"		(commit should always have a commit message)
 
-v. Connecting remote repository (git repo) to local repo
+	Every commit done has an unique(hash) commit id which is hexadecimal number of 40 characters (in short 7 unique characters which is the first 7 of 40 characters)
+	[master 82dd01b] commit
+ 	2 files changed, 3 insertions(+), 1 deletion(-)
+ 	create mode 100644 b.txt  (100644 -> Linux terminology)
+
+	git commit -am "commit message"		(add & commit operation simultaneously only for the files tracked by GIT)
+
+vi. Connecting remote repository (git repo) to local repo
 
 	git remote add origin GithubRepoUrl		(origin is just like a name which will act like a folder to store and carry the files to github, we can have any name)
 
-vi. Push operation
+vii. Push operation
 
 	git push origin master		(pushing the project to master branch in GitHub, either it can be master or main)
 
-vii. To clone a project from git repository
+viii. To clone a project from git repository
 
 	git clone GitRepoUrl
 
-viii. To create a branch
+ix. To create a branch
 
 	git branch branchname
 
-ix. To list all the branches which is present in a project in working directory (active one will be highlighted)
+x. To list all the branches which is present in a project in working directory (active one will be highlighted)
 
-	git branch
+	git branch		(in local repository)
+	git branch -r		(in remote repository)
+	git remote -a		(in local+remote repository)
 
-x. To switch to a branch
+xi. To switch to a branch
 
 	git switch branchname
+	git checkout branchname
 
-xi. To push a branch from local repo to git repo
+xii. To push a branch from local repo to git repo
 
 	git push origin branchname
 
-xii. For merging a branch to master in local repository, first switch to master branch
+xiii. For merging a branch to master in local repository, first switch to master branch
 
 	git merge branchname
-
-xiii. To list all the branches present in local repository
-
-	git branch -r
 
 xiv. After cloning any project to local repository, again we have to do the configuration to perform commit and push operation from that system
 
@@ -68,21 +82,41 @@ xvi. To perform Pull operation
 
 	git pull origin master		(sometimes it can be main in GitHub so in place of master we will use main)
 
-xvii. To check the status of the file which is added to local repository from the working directory, status of staged and unstaged changes
+xvii. To check the status of the file which is added to local repository from the working directory, status of staged, untracked and modified files
 
 	git status
 
-xviii. To get  the details of the commit (or commit history) with details (like commit id, etc)
+	git status -s  --> shows the status in short (?? shows untracked file, A shows newly added files to staging area, AM shows already added files which is modified, M shows modified)
+
+xviii. To get the details of the commit (or commit history) with details (like commit id, etc)
 
 	git log
+	git log .
 
 xix. With git log we have other options
 
-	git log --oneline	-->	gives detail of commit history in one line
+	git log filename.extension 		-->	gives commit history of the specified files and only display that commit info in which the specified file is involved
+	git log --oneline			-->	gives detail of commit history in one line  (commit id (7 characters) and commit message)
+	git log -n 2				-->	shows log limits the number of commits to display ( here the last 2 commits)
+	git log -2				-->	same as above
+	git log --max-count=1 --oneline		-->	gives details of 1 commit i.e., last commit in oneline format
+	git log --grep="pattern"		-->	shows details of the commit based on commit message as per the given pattern
+	git log --grep="added"			-->	shows all the commit which has "added" word in its commit message
+	git log --graph				-->	graphical representation (useful to view branches and merges)
+	git log --since="2024-12-24"		-->	shows commit history after this date
+	git log --after="2025-09-19"		-->	shows all commit after this date
+	git log --after=2025-09-19		-->	shows all commit after this date
+	git log --after="10 days ago"		-->	shows all the commit after 10 days ago
+	git log --after="3 hours ago"		-->	shows all the commit after 3 hours ago
+	git log --after="2 minutes ago"		-->	shows all the commit after 2 minutes ago
+	git log --until="2025-09-19"		-->	shows all commit before this date
+	git log --before=2025-09-19		-->	shows all commit before this date
+	git log --before="10 days ago"		-->	shows all the commit before 10 days ago
+	git log --before="3 hours ago"		-->	shows all the commit before 3 hours ago
+	git log --before="2 minutes ago"	-->	shows all the commit before 2 minutes ago
+	git log --author="authorname or email"	-->	shows all the commit sone by the author
+	git log --decorate			-->	displays extra info
 
-	git log --graph		-->	graphical representation (useful to view branches and merges)
-
-	git log --since="2024-12-24"	-->	shows commit history after this date
 
 xx. To view the remote connection (after remote connection is done) associated with the local repository
 
@@ -92,6 +126,58 @@ xxi. To remove remote connection i.e., to disconnect the GitHub repository from 
 
 	git remote remove origin
 
+xxii. Initially master will be connected to the latest commit and HEAD will be connected to the master (HEAD -> master)
+
+xxiii. To check for configuration done in git
+
+	git config user.name 	--> it will show the user name
+	git config user.email 	--> it will show the user email
+	git config --list 	--> it will list out all the git configurations
+
+xxiv. To reset the commit i.e., pointing the HEAD to that commit for which id is passed, if done, the commit will be deleted until the commitID passed
+
+	git reset --hard commitId	(Deletes all changes in local repository, staging area and working directory, permanent delete but it can be sometimes retrieved using "git reflog" by fetching the commit ID and then again hard reset to that commitID)
+					(hard reset can permanently delete any uncommitted files)
+
+	git reset --hard 00ba021	(resetting based on commit id)
+	git reset --hard HEAD~1		(the new HEAD will point to the second last commit, and the last commit will be deleted)
+	git reset --hard HEAD~2		(the new HEAD will point to the third last commit, and the last 2 commits will be deleted)
+
+	git reset --mixed commitID	(Keeps changes in working directory, but unstages them i.e., deletes from local repository and staging area)
+
+	git reset commitID		(same as above --> mixed)
+
+	git reset --soft commitID	(Keeps changes staged i.e., deletes only from local repo but keeps changes in WD and SA. Useful if you want to redo the commit)
+
+xxv. To get the difference in the content of the file
+
+	git diff filename			(get the difference in file content between working directory and staging area)
+
+	Example: git diff b.txt
+	diff --git a/b.txt b/b.txt		(a/b.txt -> source copy means staging area, b/b.txt -> destination copy means working directory)
+	index 4840d11..751324e 100644	
+	--- a/b.txt				(--- source copy missing some lines , here staging area)
+	+++ b/b.txt				(+++ means new line added in the destination area, here working directory)
+	@@ -1,2 +1,3 @@				(this talks about the lines from where it is counting and till which line it is considering)
+	 this is the first line in b.txt	(if any line pre-fixed with space means it is unchanged and 
+	 this is the second line
+	+this is the third line			(if any line prefixed with + means it is added in destination copy, here working directory)(if any line prefixed with - means it is removed in destination copy, here working directory)
+
+	git diff HEAD file1.txt			(compares last commit and working directory for this file as HEAD always points to the last commit)	
+	git diff --staged HEAD file1.txt	(compares last commit and staged copy for this file)
+	git diff --staged file1.txt		(same as above)
+	git diff commitID file1.txt		(compares working directory with a specific commit for the given file)
+	git diff --staged commitID file1.txt	(compares staging area and specific commit for file1.txt)
+	git diff commitID1 commitID2 file1.txt	(compares between two specified commits for the given file)
+	git diff HEAD HEAD~1 file1.txt		(compares between last commit -> HEAD and second last commit -> HEAD~1)
+	git diff master ATE			(compares content between 2 branches master & ATE, here ATE is a branch)
+	git diff master origin/master		(compares content between local repository and remote repository) 
+
+	If we don't mention filename, it compares all files which has changes
 
 
 https://github.com/RajatBurnwal/Basic-Git-Commands.git
+
+
+
+
