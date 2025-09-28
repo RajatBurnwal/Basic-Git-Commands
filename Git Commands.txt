@@ -199,6 +199,18 @@ xxviii. To show last commit on the master branch or any commit
 	git show commitID			(Show me details (commit message + changes) of the commit for the commit ID)
 
 
+xxix. Difference between git checkout vs. git reset
+----------------------------------------------------
+git checkout can be used to discard the unstaged changes in working directory.(such that any modified files which is not staged, the changes will be deleted from the working directory and will become same as staging area)
+git reset can be used to discard staged changes from staging area.
+
+
+git rm --cached vs. git reset
+------------------------------
+git rm --cached file1.txt  	--->  It will delete the file from the staging area
+git reset file1.txt		--->  The file won't be deleted from staging area but reset to previous state (one step back)
+
+
 
 https://github.com/RajatBurnwal/Basic-Git-Commands.git
 

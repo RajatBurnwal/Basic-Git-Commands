@@ -1,0 +1,1028 @@
+TDD vs. BDD
+------------
+TDD is more of Test centric where it starts from SRS (Software Requirement Specification) such that it ensures every functionalities has to be tested. It is understood by the programmers only. Non-programmers won't be able to understand.
+BDD is a natural language approach where each test case are written in normal English so that anyone can understand. It checks the Behaviour of the application and in BDD we focus on end to end scenarios.
+
+What is BDD?
+-------------
+Behavior-Driven Development (BDD) is a software development approach that enhances communication and collaboration between developers, testers, and business stakeholders.
+It focuses on defining software behavior in a way that is easily understood by all team members, ensuring that everyone has a clear understanding of what the system should do.
+In BDD, test cases are written in natural language that even non-programmers can read.
+In BDD, whatever you write must go into GIVEN-WHEN-THEN-AND/BUT steps
+	i. Given: Pre-conditions or initial context
+	ii. When: Event or trigger
+	iii. Then: Expected output
+
+Example: Login feature testcase
+Given URL of login page is open
+When user enters username, password and clicks on login button
+Then Home page should be displayed
+
+Key Features of BDD:
+--------------------
+1. Human-Readable Scenarios:
+BDD uses plain language to describe the desired behavior of the software, often in a Given-When-Then format. These scenarios are typically written using tools like Cucumber, SpecFlow, or Behave.
+
+2. Collaborative Approach:
+BDD encourages collaboration among team members to ensure that the requirements and expectations are fully understood before development starts.
+
+3. Example-Driven:
+It emphasizes defining behavior through specific examples, ensuring clarity and reducing ambiguities in requirements.
+
+4. Executable Specifications:
+The plain-language scenarios are often linked to automated tests, making them both documentation and test cases.
+
+Benefits of BDD:
+-----------------
+Improved clarity and understanding of requirements.
+Reduced misunderstandings between stakeholders.
+Early identification of edge cases and issues.
+Testable requirements that ensure the software meets business needs.
+
+Tools for BDD
+--------------
+To develop a Behavior-Driven Development (BDD) framework, a combination of tools is required to facilitate collaboration, test writing, automation, execution, and reporting. Here’s a categorized list of essential tools commonly used:
+
+1. BDD Libraries and Frameworks
+Libraries to implement and execute BDD scenarios:
+i. Java: Cucumber, JBehave
+ii. Python: Behave, Lettuce
+iii. .NET: SpecFlow,
+iv. JavaScript: Cucumber.js, Jest-Cucumber
+
+2.  Test Automation Tools
+For automating scenarios in BDD:
+i. Selenium: Browser automation for web applications.
+ii. Appium: Mobile app automation for Android and iOS.
+iii. Playwright or Cypress: Modern browser testing tools.
+iv. Rest-Assured: API testing in Java.
+v. Postman/Newman: Automating API tests with BDD scenarios.
+
+3.  Test Execution Frameworks
+For managing test runs:
+i. TestNG (Java): Works with Cucumber for structured execution.
+ii. JUnit (Java): Often paired with Cucumber for Java.
+iii. Pytest (Python): Can work with Behave or Lettuce.
+iv. NUnit (.NET): Integrates with SpecFlow.
+v. Mocha/Chai (JavaScript): Paired with Cucumber.js.
+
+4. Reporting Tools
+For generating reports from BDD test execution:
+i. Cucumber Reports: In-built plugin generates HTML reports.
+ii. ExtentReports: Generates detailed and interactive test reports.
+iii. Allure: Works well with most BDD tools for enhanced reporting.
+iv. Serenity BDD: Adds rich reporting and test lifecycle management to Cucumber.
+
+5. Continuous Integration (CI) Tools
+For running BDD tests in a CI/CD pipeline:
+i. Jenkins: Popular open-source CI tool.
+ii. GitHub Actions: CI/CD pipelines directly within GitHub.
+iii. GitLab CI/CD: Integrated CI/CD for GitLab repositories.
+iv. CircleCI or Travis CI: Cloud-based CI tools.
+v. Azure DevOps: For CI/CD pipelines with comprehensive tracking.
+
+Cucumber with TestNG
+---------------------
+Cucumber and TestNG in Selenium with Java represent a powerful combination to write behavior-driven development (BDD) tests and execute them using TestNG as the test execution framework.
+
+What is Cucumber?
+------------------
+Cucumber is a BDD tool that enables writing test scenarios in a human-readable format using the Gherkin syntax (Given-When-Then). It allows collaboration between technical and non-technical stakeholders by providing clear, example-driven specifications.
+Gherkin is a business readable language which helps you to describe business behavior without going into details of implementation
+
+What is TestNG?
+---------------
+TestNG is a testing framework inspired by JUnit but with more powerful features like annotations, data-driven testing, and parallel test execution. It provides structure to your tests and enables easier test execution and reporting.
+
+How Do Cucumber and TestNG Work Together in Selenium?
+------------------------------------------------------
+i. Cucumber is used to define the test scenarios in plain English.
+ii. TestNG is used as the test runner to manage and execute Cucumber scenarios.
+iii. Selenium is used for browser automation, interacting with web pages as per the steps defined in Cucumber.
+
+Step-by-Step Guide to Using Cucumber with TestNG in Selenium Java
+------------------------------------------------------------------
+Step-1: Set Up Your Project
+	Create a Maven project in your IDE (e.g., IntelliJ, Eclipse).
+	Add the following dependencies in the pom.xml file
+		i. cucumber-java
+		ii. cucumber-testng
+		iii. cucumber-core
+		iv. testng   --> check
+		v. selenium java
+
+Step-2: Create Feature Files
+	Create a folder named "features" in your src/test/resources directory.
+	Add a .feature file (e.g., login.feature)
+		
+		Feature: Login Functionality
+		Scenario: Valid login
+			Given the user is on the login page
+			When the user enters valid credentials
+			Then the user should be redirected to the dashboard
+
+Step-3: Create Step Definition Class
+	Create a package (e.g., stepDefinitions) in the src/test/java directory.
+	Add a Java class (e.g., LoginSteps.java) and write step definitions
+		
+		package stepDefinitions;
+
+		import io.cucumber.java.en.*;
+
+		public class LoginSteps {
+
+			@Given("the user is on the login page")
+			public void theUserIsOnTheLoginPage() {
+				System.out.println("User navigates to the login page");
+			}
+
+			@When("the user enters valid credentials")
+			public void theUserEntersValidCredentials() {
+        			System.out.println("User enters valid username and password");
+    			}
+
+			@Then("the user should be redirected to the dashboard")
+  			public void theUserShouldBeRedirectedToTheDashboard() {
+  				System.out.println("User is redirected to the dashboard");
+    			}
+		}
+
+
+Step-4: Create the TestNG Test Runner
+	Create a test runner class (e.g., TestRunner.java)
+
+		package testRunner;
+
+		import io.cucumber.testng.AbstractTestNGCucumberTests;
+		import io.cucumber.testng.CucumberOptions;
+
+		@CucumberOptions(
+				features = "src/test/resources/features/login.feature",		(example- here, login.feature)
+				glue = "stepDefinitions",
+				plugin = {"pretty", "html:target/cucumber-reports.html"}
+				)
+		public class TestRunner extends AbstractTestNGCucumberTests {
+			//it will be an empty class
+		}
+
+Step-5: Execute Tests
+	Run the TestRunner class using TestNG.
+	TestNG will execute all scenarios defined in the features folder, and Cucumber will match steps with the corresponding step definitions.
+
+Cucumber TestNG Execution Flow:
+--------------------------------
+i. Cucumber reads feature files written in Gherkin syntax.
+ii. Step definitions in Java map the steps in the feature files to executable code.
+iii. TestNG runs the tests, manages execution, and generates test reports.
+iv. Selenium WebDriver automates browser interactions for each step.
+
+
+Advantages of Using Cucumber with TestNG
+------------------------------------------
+i. Enables writing tests in plain English for better collaboration.
+ii. Integrates seamlessly with Selenium for browser automation.
+iii. Leverages TestNG’s features like parallel execution and detailed reports.
+iv. Encourages a clear separation between business logic (features) and implementation (step definitions).
+
+
+Feature File
+------------
+In Cucumber, test cases are described in Cucumber feature file.
+It is written in Gherkin syntax, a plain-English format that uses a specific set of keywords to describe software features, scenarios, and their expected outcomes.
+Feature files act as the primary medium for collaboration between developers, testers, and business stakeholders by clearly outlining requirements in an understandable way.
+Feature file should have extension (.feature) and each feature file should have only one feature.
+In a Feature file we can have multiple scenarios
+# is a comment in feature file
+
+Structure of a Feature File
+----------------------------
+A feature file typically consists of:
+i. Feature Definition: Describes the high-level functionality or module of the application.
+ii. Scenarios: Specific test cases that outline a particular behavior.
+iii. Steps: Detailed steps for executing the scenario, written using keywords like Given, When, Then, And, and But.
+
+Key Components of a Feature file
+---------------------------------
+1. Feature:
+	Represents a high-level description of the software feature being tested.
+	Usually includes a short title and a narrative to provide context.
+
+2. Scenario:
+	Represents a specific use case or test case for the feature.
+	Each scenario is a unique example of behavior to be tested
+
+3. Steps:
+	Describe the preconditions, actions, and expected outcomes using Given, When, Then, And, or But.
+	Each step maps to a step definition in the BDD automation code.
+
+4. Background (Optional):
+	Defines steps that are common to all scenarios in the feature file.
+	It is executed before each scenario in that feature file
+
+		Background:
+		    Given the user has registered an account
+		    And the user is on the login page
+
+5. Scenario Outline (Optional):
+	Used for parameterized scenarios that require multiple sets of test data.
+	Includes Examples to specify the data sets.
+
+6. Examples(optional):
+	It is used within a Scenario Outline to provide multiple sets of test data for executing the same test scenario with different inputs.
+	Each row in the table represents one test iteration.
+
+		Scenario Outline: Login with multiple credentials
+		    Given the user is on the login page
+		    When the user enters <username> and <password>
+		    Then the login should be <status>
+
+		    Examples:
+		    | username | password  | status  |			//first row should be the same name as provided in scenario outline
+		    | user1    | pass123   | success |
+		    | user2    | wrongpass | failure |
+
+
+			Explanation:
+				The placeholders <username>, <password>, and <status> in the scenario steps are replaced with the corresponding values from the Examples table.
+				Test iterations:
+				username: user1, password: pass123, status: success.
+				username: user2, password: wrongpass, status: failure.
+
+7. Comments:
+	Purpose: Add explanations or notes in the feature file without affecting execution.
+	Syntax: Lines starting with # are treated as comments.
+
+		# This is a comment explaining the feature or scenario
+
+8. Tags:
+	Purpose: Categorize and filter scenarios or features for selective execution.
+	Syntax: Tags start with @ and are placed above the feature or scenario.
+
+		@Login
+		Feature: User Login
+
+		@ValidLogin
+		Scenario: Successful login
+
+	In a feature file for Behavior-Driven Development (BDD), tags are used to categorize, group, and control the execution of scenarios or features. Tags are a flexible way to organize 	tests and selectively run them based on specific criteria.
+	
+	Purpose of Tags:
+	----------------
+	Organize Tests: Group related scenarios or features.
+	Filter Tests: Execute specific tests by including or excluding tags.
+	Custom Metadata: Provide additional information about tests (e.g., priority, environment, or component).
+	Enable CI/CD Integration: Run only relevant tests in different stages of the pipeline (e.g., smoke, regression).
+	Dynamic Test Execution: Facilitate testing subsets based on conditions.
+
+	Syntax of Tags:
+	----------------
+	Tags are defined with an @ prefix.
+	They are placed above:
+	i. A "Feature" to apply to all scenarios within it.
+	ii. A "Scenario" to apply only to that specific scenario.
+	iii. A "Scenario Outline" for parameterized scenarios.
+
+		@SmokeTest		#tag just like a group name
+		Feature: Login functionality
+
+		    @Positive
+		    Scenario: Successful login
+			        Given the user is on the login page
+			        When the user enters valid credentials
+        			Then the user is redirected to the dashboard
+
+		    @Negative
+		    Scenario: Unsuccessful login
+			        Given the user is on the login page
+			        When the user enters invalid credentials
+			        Then an error message is displayed
+
+
+		@SmokeTest
+		Scenario: Verify login with valid credentials
+
+		Tags can specify environments like development, staging, or production.
+		@Staging
+		Scenario: Verify user profile update
+
+		Group scenarios by modules or components
+		@Login
+		Scenario: Verify login functionality
+
+	Execution Examples
+	-------------------
+	Using Cucumber with mvn or other tools:
+
+	Run all scenarios with a specific tag:
+		mvn test -Dcucumber.filter.tags="@SmokeTest"
+
+	Run scenarios with multiple tags (logical OR):
+		mvn test -Dcucumber.filter.tags="@Login or @Search"
+
+	Exclude scenarios with a tag:
+		mvn test -Dcucumber.filter.tags="not @WIP"
+
+	Run scenarios with specific combinations:
+		mvn test -Dcucumber.filter.tags="@Login and not @WIP"
+
+
+Important terms used in Gherkin language
+-----------------------------------------
+i. Feature: Summary
+ii. Background: define steps that are common to all the tests(or scenarios) in the feature file
+iii. Scenario: Title
+iv. Given: Pre-condition
+v. When: Event/Action
+vi. Then: Expected output of actions
+vii. And: Add conditions to your steps in pre-condition or action or expected output
+viii. But: Add negative type comments
+ix. Scenario Outline: To perform Data Driver Testing
+
+
+Summary of Components:
+----------------------
+Component		Purpose						Mandatory
+---------		-------						---------
+Feature			Describes the functionality or module		Yes
+Scenario		Defines a single test case			Yes
+Steps			Specifies the conditions, actions, and outcomes	Yes
+Background		Shared preconditions for scenarios		Optional
+Scenario Outline	Parameterized test case definition		Optional
+Examples		Provides test data for Scenario Outline		Optional
+Comments		Add notes or explanations			Optional
+Tags			Categorize scenarios for selective execution	Optional
+
+
+
+
+Step Definition File:
+---------------------
+A Step Definition File is a critical component of a Behavior-Driven Development (BDD) framework.
+It is where the actual code resides to automate the steps written in a feature file.
+Each step in a feature file (written in Gherkin syntax) is mapped to a corresponding method in the step definition file.
+It is written in src/test/java folder inside stepdefinition package
+There can be multiple stepdefinition file
+
+Purpose of a Step Definition File:
+----------------------------------
+Link Feature Files to Code: 	Maps Gherkin steps (e.g., Given, When, Then) to executable code.
+Automate Test Steps: 		Contains the logic to perform the actions and validations described in the feature file.
+Enable Reusability: 		Allows steps to be reused across different scenarios and feature files.
+
+Structure of a Step Definition File:
+-------------------------------------
+1. Annotations:
+	Annotations like @Given, @When, @Then are used to map steps in the feature file to methods in the step definition file.
+
+2. Regular Expressions:
+	Steps are matched using regular expressions to make them flexible and parameterized.
+
+		Scenario: Search for a product
+		    Given the user searches for "laptop"
+
+
+		import io.cucumber.java.en.Given;
+
+		public class SearchSteps {
+
+		    @Given("the user searches for \"(.*)\"")
+		    public void theUserSearchesFor(String product) {
+        		// The captured product (e.g., "laptop") is passed as a parameter
+       			 System.out.println("Searching for product: " + product);
+		    }
+		}
+
+		Explanation:
+		------------
+		"(.*)" is the regular expression.
+		.* matches any sequence of characters.
+		The captured text (laptop) is passed as the parameter product.
+
+		Common Regular Expression Patterns
+		-----------------------------------
+		Pattern		Description				Example Match
+		-------		-----------				--------------
+		.*		Matches any sequence of characters	laptop, anything
+		\\d+		Matches one or more digits		123, 45678
+		\\w+		Matches one or more word characters	hello, user123
+		\"(.*)\"	Matches anything inside quotes		"text", "value"
+		(\\d{4})	Matches exactly 4 digits		2024, 1234
+
+3. Method Implementation:
+	The method contains the logic for executing the action or validation.
+
+
+Mapping a Feature File to a Step Definition
+--------------------------------------------
+Feature file-->
+
+Feature: User Login
+
+    Scenario: Successful login
+        Given the user is on the login page
+        When the user enters valid credentials
+        Then the user is redirected to the dashboard
+
+
+StepDefinition file-->
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.Then;
+
+public class LoginSteps {
+
+    @Given("the user is on the login page")
+    public void the_User_Is_On_The_Login_Page() {
+        // Code to navigate to the login page
+        System.out.println("Navigating to the login page");
+    }
+
+    @When("the user enters valid credentials")
+    public void the_User_Enters_Valid_Credentials() {
+        // Code to enter username and password
+        System.out.println("Entering valid username and password");
+    }
+
+    @Then("the user is redirected to the dashboard")
+    public void the_User_Is_Redirected_To_The_Dashboard() {
+        // Code to validate redirection to the dashboard
+        System.out.println("User is redirected to the dashboard");
+    }
+}
+
+
+Steps to generate methods for feature file in step-definition file
+-----------------------------------------------------------------
+1. Create a new file with the .feature extension (e.g., login.feature).
+2. Define the Feature, Scenario, and Gherkin steps (Given, When, Then).
+	Feature: User Login
+
+	Scenario: Successful login
+	    Given the user is on the login page
+	    When the user enters valid credentials
+	    Then the user is redirected to the dashboard
+
+3. Run the feature file without creating a step definition file.
+4. In the console output, you will see something like:
+	
+	You can implement missing steps with the snippets below:
+
+	@Given("the user is on the login page")
+	public void the_user_is_on_the_login_page() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@When("the user enters valid credentials")
+	public void the_user_enters_valid_credentials() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@Then("the user is redirected to the dashboard")
+	public void the_user_is_redirected_to_the_dashboard() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	Copy these method snippets.
+
+5. In your project structure, create a new Java class file in the package (e.g., stepDefinitions).
+6. Paste the copied step definitions into this file.
+7. Implement the Logic	-->	Replace the placeholder logic (System.out.println or throw new io.cucumber.java.PendingException();) with actual code to perform the actions.
+
+	Example for navigating to the login page:
+	public void the_user_is_on_the_login_page() {			//the underscores in between the words is of snake snippets --> snake_case
+	    WebDriver driver = new ChromeDriver();
+       	    driver.get("https://example.com/login");
+	}
+
+	Example for navigating to the login page:
+	public void theuserisontheloginpage() {				//the continuous word is because of Camel snippets --> CAMELCASE
+	    WebDriver driver = new ChromeDriver();
+       	    driver.get("https://example.com/login");
+	}
+
+
+				(snippets = CucumberOptions.SnippetType.CAMELCASE)	-->	Generates methods in camelCase format.		-->	Used in Runner class
+				(snippets = CucumberOptions.SnippetType.UNDERSCORE)	-->	Generates methods in snake_case format.		-->	Used in Runner class
+
+
+8. Once all the steps are implemented then we will go for creating Runner class
+
+
+
+Runner Class
+------------
+The Runner class in Cucumber is a specialized class that serves as the entry point for executing Cucumber tests.
+The Runner class specifies critical configurations such as the location of feature files, the location of step definition files, and other settings like reports and plugin configurations
+
+Key Features of a Runner Class
+-------------------------------
+Execution: It executes the feature files by invoking the corresponding step definitions.
+Configuration: It configures Cucumber options such as the feature file path, step definition glue code location, reporting plugins, and more.
+Integration: It integrates Cucumber with testing frameworks like JUnit or TestNG.
+
+Runner Class with TestNG
+-------------------------
+If you’re using TestNG instead of JUnit, the Runner class looks slightly different. You use the @CucumberOptions annotation and extends the AbstractTestNGCucumberTests class
+
+     package runners;
+
+     import io.cucumber.testng.AbstractTestNGCucumberTests;
+     import io.cucumber.testng.CucumberOptions;
+
+     @CucumberOptions(
+         features = "src/test/resources/features/login.feature",
+         glue = "stepdefinitions",
+         plugin = {
+ 	           "pretty",				// Prints Gherkin steps in a readable format
+		   "html:target/cucumber-reports.html",	// Generates an HTML report in target folder in project
+		   "json:target/cucumber.json"},	// Generates a JSON report in target folder in project
+	           monochrome = true,			// Makes console output readable
+	           dryRun = true,                      // Checks mapping without running tests (if false then it will execute when all step definition methods are mapped with feature file)
+	           tags = "@SmokeTest"                	// Filters scenarios by tags
+     )
+     public class TestRunner extends AbstractTestNGCucumberTests {
+		//this will be an empty class
+     }
+
+
+@CucumberOptions:
+------------------
+Configures various Cucumber options, such as:
+i. features:	Path to the directory or file containing .feature files.
+ii. glue:	Package containing step definition methods.
+iii. plugin:	Enables different reporting formats like pretty, html, json, etc.
+iv. monochrome: If true, makes the console output more readable by removing unnecessary characters.
+v. dryRun:	If true, checks if all steps in the feature file have corresponding step definitions without actually executing the tests.
+vi. tags:	Filters scenarios to run based on specified tags.
+
+Steps to Generate Step Definitions:
+------------------------------------
+Add your feature file.
+Set dryRun = true in the @CucumberOptions of the Runner class.
+Run the Runner class.
+Copy the generated snippets from the console.
+Paste them into your stepdefinitions package and implement the logic
+
+
+Data Driven Testing
+---------------------
+There are several ways to perform Data Driven Testing in Cucumber TestNG
+
+1. Using Placeholders in a Feature File-->
+	In the feature file, placeholders are represented using {}. These placeholders can accept values passed directly within the step itself.
+
+Feature file	-->	Feature: Login functionality
+
+			  Scenario: Valid login with placeholders
+			    Given I navigate to the login page
+			    When I enter username "user1@example.com" and password "pass123"
+			    Then I should see the homepage
+
+StepDefinition	-->	@When("I enter username {string} and password {string}")
+			public void iEnterUsernameAndPassword(String username, String password) {
+		        	// Enter the username and password
+		        	driver.findElement(By.id("username")).sendKeys(username);
+		        	driver.findElement(By.id("password")).sendKeys(password);
+		        	driver.findElement(By.id("loginButton")).click();
+			}
+
+2. Placeholders with Dynamic Data-->
+	You can also use placeholders for other data types.
+
+Feature file	-->	Feature: User registration
+
+			  Scenario: Register a new user
+			    Given I navigate to the registration page
+			    When I register with name "John Doe", email "john@example.com", and age 30
+			    Then I should see the registration confirmation
+
+StepDefinition	-->	@When("I register with name {string}, email {string}, and age {int}")
+			public void iRegisterWithNameEmailAndAge(String name, String email, int age) {
+			    driver.findElement(By.id("name")).sendKeys(name);
+			    driver.findElement(By.id("email")).sendKeys(email);
+			    driver.findElement(By.id("age")).sendKeys(String.valueOf(age));
+			    driver.findElement(By.id("registerButton")).click();
+			}
+
+
+3. Using Examples in Scenario Outline-->
+	Cucumber's Scenario Outline is a built-in feature that supports data-driven testing directly in feature files.
+
+Feature file	-->	Feature: Login functionality
+
+			  Scenario Outline: Valid login
+			    Given I navigate to the login page
+			    When I enter username "<username>" and password "<password>"
+			    Then I should see the homepage
+
+			    Examples:
+			      | username       | password    |
+			      | user1@example.com | pass123    |
+			      | user2@example.com | pass456    |
+
+
+StepDefinition	-->	@When("I enter username {string} and password {string}")
+			public void iEnterUsernameAndPassword(String username, String password) {
+			    driver.findElement(By.id("username")).sendKeys(username);
+			    driver.findElement(By.id("password")).sendKeys(password);
+			}
+
+3. Using Data Tables in Step Definitions-->
+	You can pass multiple sets of data in tabular format within the step in the feature file.
+
+Feature file	-->	Feature: Login functionality
+
+			  Scenario: Valid login with multiple users
+			    Given I navigate to the login page
+			    When I enter the following user credentials:
+			      | username          | password    |
+			      | user1@example.com | pass123     |
+			      | user2@example.com | pass456     |
+			    Then I should see the homepage
+
+StepDefinition	-->	@When("I enter the following user credentials:")
+			public void iEnterTheFollowingUserCredentials(DataTable dataTable) {
+			    List<Map<String, String>> credentials = dataTable.asMaps(String.class, String.class);
+			    for (Map<String, String> user : credentials) {
+        			String username = user.get("username");
+        			String password = user.get("password");
+
+       				driver.findElement(By.id("username")).clear();
+       				driver.findElement(By.id("username")).sendKeys(username);
+       				driver.findElement(By.id("password")).clear();
+     				driver.findElement(By.id("password")).sendKeys(password);
+
+			        driver.findElement(By.id("loginButton")).click();
+			     }
+			}
+
+
+4. Using External Data Files (Excel or CSV)-->
+	You can integrate external data sources like Excel or CSV for more extensive datasets.
+
+	Steps
+	-----
+	Use libraries like Apache POI (for Excel) or Java's BufferedReader (for CSV).
+	Read the data from the external file.
+	Pass the data dynamically to the step definition.
+
+Feature file	-->	Feature: Login functionality
+
+			  Scenario: Valid login with external data
+			    Given I navigate to the login page
+			    When I login using external data from "LoginData.xlsx"
+			    Then I should see the homepage
+
+StepDefinition	-->	@When("I login using external data from {string}")
+			public void iLoginUsingExternalDataFrom(String fileName) throws IOException {
+			    FileInputStream fis = new FileInputStream("src/test/resources/" + fileName);
+			    Workbook workbook = new XSSFWorkbook(fis);
+			    Sheet sheet = workbook.getSheetAt(0);
+
+			    for (Row row : sheet) {
+			        String username = row.getCell(0).getStringCellValue();
+			        String password = row.getCell(1).getStringCellValue();
+
+			        driver.findElement(By.id("username")).clear();
+			        driver.findElement(By.id("username")).sendKeys(username);
+			        driver.findElement(By.id("password")).clear();
+			        driver.findElement(By.id("password")).sendKeys(password);
+
+			        driver.findElement(By.id("loginButton")).click();
+			    }
+
+			    workbook.close();
+			    fis.close();
+			}
+
+5. Using TestNG @DataProvider-->
+	TestNG's @DataProvider is a powerful way to pass multiple sets of data to a single test method. You can link it with Cucumber via custom hooks or directly in step definitions.
+
+Feature file	-->	Feature: Login functionality
+
+			  Scenario: Valid login using TestNG DataProvider
+			    Given I navigate to the login page
+			    When I login with username and password
+			    Then I should see the homepage
+
+StepDefinition	-->	import org.testng.annotations.DataProvider;
+
+			public class LoginSteps {
+
+			    @DataProvider(name = "loginData")
+			    public Object[][] getLoginData() {
+			        return new Object[][] {
+			            {"user1@example.com", "pass123"},
+			            {"user2@example.com", "pass456"}
+			        };
+			    }
+
+			    @When("I login with username and password")
+			    @Test(dataProvider = "loginData")
+			    public void iLoginWithUsernameAndPassword(String username, String password) {
+			        driver.findElement(By.id("username")).sendKeys(username);
+			        driver.findElement(By.id("password")).sendKeys(password);
+			        driver.findElement(By.id("loginButton")).click();
+			    }
+			}
+
+6. Using JSON or XML Files-->
+	For structured datasets, you can use JSON or XML files.
+
+	Steps
+	------
+	Parse the JSON or XML file using libraries like Jackson or Gson (for JSON) and JAXB (for XML).
+	Use the parsed data in your step definitions.
+
+Feature file	-->	Feature: Login functionality
+
+			  Scenario: Valid login using JSON data
+			    Given I navigate to the login page
+			    When I login with credentials from "users.json"
+			    Then I should see the homepage
+
+StepDefinition	-->	import com.fasterxml.jackson.databind.ObjectMapper;
+
+			@When("I login with credentials from {string}")
+			public void iLoginWithCredentialsFrom(String fileName) throws IOException {
+			    ObjectMapper mapper = new ObjectMapper();
+			    File file = new File("src/test/resources/" + fileName);
+			    List<Map<String, String>> users = mapper.readValue(file, new TypeReference<List<Map<String, String>>>() {});
+
+			    for (Map<String, String> user : users) {
+			        String username = user.get("username");
+			        String password = user.get("password");
+
+			        driver.findElement(By.id("username")).sendKeys(username);
+			        driver.findElement(By.id("password")).sendKeys(password);
+			        driver.findElement(By.id("loginButton")).click();
+			    }
+			}
+
+
+Summary of Methods
+------------------
+Method				Use Case
+------				--------
+Placeholders			Directly passing the value in the scenario
+Scenario Outline		Simple data-driven tests defined in the feature file.
+Data Tables			Tabular data directly in the feature file for complex scenarios.
+External Files (Excel/CSV)	Larger datasets managed externally, suitable for real-world test cases.
+TestNG @DataProvider		Clean separation of test data and logic, reusable in multiple tests.
+JSON/XML Files			Structured data for complex scenarios with nested or hierarchical datasets.
+
+
+
+BaseClass
+----------
+It is a class which contains commonly used methods and variables (like all the variables which is needed for all the step-definition classes)
+Each stepdefinition file will extends to BaseClass.
+It is created in stepDefinition package and this class will contain all the common step definition methods which will be common to all different stepDefinition files
+
+
+--> To execute all the feature files present in Features folder, we will make changes in RunnerClass where in features attribute instead of passing a single feature file, we will pass the feature package which contains all the feature file and all feature file will execute.
+
+     package runners;
+
+     import io.cucumber.testng.AbstractTestNGCucumberTests;
+     import io.cucumber.testng.CucumberOptions;
+
+     @CucumberOptions(
+         features = "src/test/resources/features",
+         glue = "stepdefinitions",
+         plugin = {
+ 	           "pretty",				// Prints Gherkin steps in a readable format
+		   "html:target/cucumber-reports.html",	// Generates an HTML report in target folder in project
+		   "json:target/cucumber.json"},	// Generates a JSON report in target folder in project
+	           monochrome = true,			// Makes console output readable
+	           dryRun = true,                      // Checks mapping without running tests (if false then it will execute when all step definition methods are mapped with feature file)
+	           tags = "@SmokeTest"                	// Filters scenarios by tags
+     )
+     public class TestRunner extends AbstractTestNGCucumberTests {
+		//this will be an empty class
+     }
+
+
+--> To execute multiple feature files out of all the feature file present in Features folder, we will make changes in RunnerClass where in features attribute instead of passing a single feature file, we will pass multiple feature file in String array form.
+
+
+     package runners;
+
+     import io.cucumber.testng.AbstractTestNGCucumberTests;
+     import io.cucumber.testng.CucumberOptions;
+
+     @CucumberOptions(
+         features = {"src/test/resources/features/login.feature", "src/test/resources/features/cart.feature"},		(here only these feature files will be executed)
+         glue = "stepdefinitions",
+         plugin = {
+ 	           "pretty",				// Prints Gherkin steps in a readable format
+		   "html:target/cucumber-reports.html",	// Generates an HTML report in target folder in project
+		   "json:target/cucumber.json"},	// Generates a JSON report in target folder in project
+	           monochrome = true,			// Makes console output readable
+	           dryRun = true,                      // Checks mapping without running tests (if false then it will execute when all step definition methods are mapped with feature file)
+	           tags = "@SmokeTest"                	// Filters scenarios by tags
+     )
+     public class TestRunner extends AbstractTestNGCucumberTests {
+		//this will be an empty class
+     }
+
+--> In a similar way, multiple step definition files can be added to glue attribute in RunnerClass such that all will be executed 
+
+
+
+Tags
+------
+It is similar to Group execution where we provide a group name to a scenario using @Tag (ex- @Smoke)
+Tags in Cucumber are a powerful feature that helps organize and control the execution of your tests.
+Tags are annotations that you can attach to your scenarios or feature files, making it easier to filter and execute specific tests based on your needs either to include a tag in execution or to exclude some tag.
+
+Adding @Tags to a scenario (even multiple tags can be given to a scenario)
+--------------------------
+	@Smoke
+	Scenario: Verify the login functionality
+	    Given the user is on the login page
+	    When they enter valid credentials
+	    Then they should be redirected to the dashboard
+
+
+	@Smoke @Regression
+	Scenario: Verify the login functionality
+	    Given the user is on the login page
+	    When they enter valid credentials
+	    Then they should be redirected to the dashboard
+
+Adding Tags to Feature Files
+-----------------------------
+You can tag an entire feature file. This applies the tag to all scenarios within the feature.
+
+	@Regression
+	Feature: User Management
+
+	    Scenario: Create a new user
+	        Given the admin is logged in
+	        When they create a user
+	        Then the user should be created successfully
+
+Executing the feature file of some specific tag
+-------------------------------------------------
+The execution is done from RunnerClass where an attribute is used named as "tags" where we specify which tag needs to be executed
+
+	@CucumberOptions(
+	    features = "src/test/resources/features",
+	    glue = "stepDefinitions",
+	    tags = "@Smoke",					//scenario under Smoke tag will be executed
+	    plugin = {"pretty", "html:target/cucumber-reports.html"}
+	)
+	public class TestRunner extends AbstractTestNGCucumberTests {
+		//this will be an empty class
+	}
+
+It can be checked from the report by checking on the scenario where the executed one will be flagged as green and remaining will be in grey
+
+If we want to execute multiple scenarios based on multiple tags then we will use the below syntax in RunnerClass with "tags" attribute
+
+i.	tags = "@Sanity"  --->  will run scenario which is tagged with "Sanity". Does not matter if it has other tag as well
+ii.	tags = "@Sanity or @Regression"  --->  will run scenario which is tagged with "Sanity" or "Regression" (any one)
+iii.	tags = "@Sanity and @Regression"  --->  will run scenario which is tagged with "Sanity" as well as "Regression" (both)
+iv.	tags = "@Sanity and not @Regression"  --->  will run scenario which is tagged with "Sanity" but not "Regression"
+v.	tags = "not @WIP"    ---->       Exclude scenarios with @WIP tag
+vi.	tags = "not (@WIP or @Bug)"   --->  Exclude @WIP or @Bug scenarios
+vii.	tags = "(@Regression or @SmokeTest) and not (@WIP or @Bug)"   --->  Include @Regression or @SmokeTest but exclude @WIP and @Bug
+
+Hooks
+------
+Hooks are the block of code that runs before and after each scenario.
+Hooks are special methods that allow you to perform actions before or after specific test scenarios or steps. They are commonly used to set up preconditions, initialize configurations, and clean up after test execution.
+
+Types of Hooks
+--------------
+i. @Before		-->	Runs before each scenario.
+				Often used for setup tasks like opening a browser, setting up a database connection, or loading configuration files.
+
+				@Before
+    				public void setup() {
+        				System.out.println("Setting up preconditions for the scenario.");
+    				}
+
+ii. @After		-->	Runs after each scenario.
+				Typically used for cleanup tasks such as closing browsers, clearing caches, or resetting configurations.
+
+				@After
+				public void tearDown() {
+        				System.out.println("Cleaning up after the scenario.");
+    				}
+
+iii. @BeforeStep	-->	Executes before each step in a scenario.
+				Useful for pre-step validations or logging.
+
+				@BeforeStep
+   				public void beforeStep() {
+        				System.out.println("This runs before each step.");
+    				}
+
+iv. @AfterStep		-->	Executes after each step in a scenario.
+				Often used for taking screenshots, logging, or asserting intermediate states
+
+				@AfterStep
+    				public void afterStep() {
+        				System.out.println("This runs after each step.");
+    				}
+
+v. Tag specific Hooks	-->	You can apply hooks to specific scenarios by using tags. Here we can apply the operators on tags (and, or & not operator)
+
+   @Before("@tagname")	-->	A @Before hook with a tag will only be executed for scenarios that are tagged with that tag.
+
+				@Before("@SmokeTest")
+   				public void setupForSmokeTests() {		//The setupForSmokeTests() method runs only for scenarios tagged with @SmokeTest.
+   					System.out.println("Setting up before SmokeTest scenario.");
+   					// Perform setup logic specific to SmokeTest scenarios
+   				}
+    
+   				@Before("@RegressionTest")
+   				public void setupForRegressionTests() {		//The setupForRegressionTests() method runs only for scenarios tagged with @RegressionTest
+   					System.out.println("Setting up before RegressionTest scenario.");
+        				// Perform setup logic specific to RegressionTest scenarios
+    				}
+
+				@Before("@SmokeTest and @RegressionTest")
+				public void setupForSmokeAndRegression() {	//This will execute the hook only for scenarios that are tagged with both @SmokeTest and @RegressionTest
+					System.out.println("Setting up before Smoke and Regression Test scenarios.");
+				}
+
+   @After("@tagname")	-->	An @After hook with a tag will only be executed after scenarios that are tagged with that tag.
+
+				@After("@SmokeTest")
+   				public void tearDownForSmokeTests() {
+        				System.out.println("Cleaning up after SmokeTest scenario.");
+        				// Perform cleanup logic specific to SmokeTest scenarios
+    				}
+    
+    				@After("@RegressionTest")
+    				public void tearDownForRegressionTests() {
+        				System.out.println("Cleaning up after RegressionTest scenario.");
+        				// Perform cleanup logic specific to RegressionTest scenarios
+    				}
+
+				@AfterStep("@RegressionTest")
+				public void afterStepForRegressionTests() {	//@AfterStep hooks to run them before or after specific steps of scenarios based on tags.
+    					System.out.println("Executing after step for RegressionTest scenario.");
+				}
+
+vi. Order of execution in Hooks	-->	Hooks can be ordered by priority. The lower the value, the higher the priority. It reverses in case of @After i.e., the lower order value, the lower priority (order=1 will be executed after order=2 in case of @After)
+
+				@Before(order = 1)
+    				public void firstSetup() {
+        				System.out.println("First setup.");
+    				}
+
+    				@Before(order = 2)
+    				public void secondSetup() {
+        				System.out.println("Second setup.");
+    				}
+
+vii. Hooks can also initialize or clean up shared data between step definitions using dependency injection with Cucumber's Scenario object or custom classes.
+
+	public class Hooks {
+    		@Before
+    		public void setup(Scenario scenario) {
+    		    System.out.println("Running scenario: " + scenario.getName());
+    		}
+	}
+
+viii. Taking Screenshot After a Failed Test (After Hook):
+
+	public class Hooks {
+    		@After
+    		public void tearDown(Scenario scenario) {
+        		if (scenario.isFailed()) {
+            			System.out.println("Test failed. Capturing screenshot.");
+            			// Code to capture screenshot
+        		}
+    		}
+	}
+
+Key Points on Hooks
+--------------------
+i. Hooks improve code reusability by handling setup and cleanup tasks.
+ii. They run automatically before/after scenarios or steps, depending on their type.
+iii. Tag-specific hooks enable selective execution.
+iv. Hooks can be prioritized using the order attribute.
+v. Use hooks to manage shared data, logging, screenshots, or database states.
+
+How to take screenshot of the failed script
+--------------------------------------------
+The @Hooks will be used to perform this operation, @After hook will be used. In the method argument we will be passing one parameter of "Scenario" class.
+
+	@After
+	public void takeScreenshotOnFailure(Scenario scenario) {
+        	if (scenario.isFailed()) {
+            	// Create a unique file name for the screenshot
+            	String screenshotName = "target/screenshots/" + scenario.getName().replace(" ", "_") + ".png";
+
+            	// Capture the screenshot
+            	ScreenshotUtil.captureScreenshot(driver, screenshotName);		//store the generic method in a Utility class, here as a static method
+	}

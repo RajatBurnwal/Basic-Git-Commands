@@ -106,3 +106,38 @@ with GitHub repository by passing the repo URL.
 
 Goals and Options:
 In this section we provide the maven command which need to be executed for that respective job.
+
+
+Steps to configure Jenkins (initially)
+--------------------------------------
+Configuring Jenkins means integrating JDK, git.exe, and MAVEN tools to the Jenkins profile
+
+Step-1: Once Jenkins is downloaded and started and the Jenkins dashboard is displayed, click on Settings icon (or Manage Jenkins option)
+Step-2: Click on Tools option.
+Step-3: In JDK section, pass "JAVA_HOME" in Name field and path of jdk in JAVA_HOME field (Ex. C:\Program Files\Java\jdk-17)
+Step-4: In Git installations, pass "MyGit" in Name field and pass the path of git.exe in Path to Git executable field (Ex. C:\Program Files\Git\bin\git.exe)
+Step-5: In Maven installations, pass "MAVEN_HOME" in the Name field and pass the path of Maven tool in MAVEN_HOME field (Ex. C:\Users\rajat burnwal\Downloads\apache-maven-3.9.6-bin\apache-maven-3.9.6)
+Step-6: Click on Save button
+
+
+Steps to download Maven Integration Tool to create a Maven project Job
+----------------------------------------------------------------------
+If this plugin is not installed then while creating a new JOB we will not get "Maven Project" option. To install it,
+
+Step-1: Click on Settings icon in Dashboard, Click on Plugins options
+Step-2: In "Available Plugins" option, search for "Maven Integration Plugin" and select it and click on "Install"
+Step-3: Wait until it is installed, then the "Maven Project" option will come in creating "New Job"
+
+
+Steps to create a Maven Project in Jenkins and integrating with the project present in GITHUB repo
+---------------------------------------------------------------------------------------------------
+Step-1: Click on "New Item+"
+Step-2: Pass the Job name, and select "Maven Project" and click on OK.
+Step-3: In Source Code Management option, select Git radio button and pass the GITHUB repository URL
+Step-4: Select the option from "Build Triggers" (either Build periodically or Poll SCM or Build after other projects are built)
+Step-5: In "Goals and Options" field pass the necessary "mvn" command according to what to be executed in that JOB.
+Step-6: Click on Save.
+
+If we want to execute "On Demand", click on "Build Now"
+If we want to execute after some interval, wait until the time interval comes as here we select "Build periodically" and pass the necessary Scheduling pattern.
+If we want to execute after some interval only when some update is done on GITHUB, wait until the time interval comes as here we select "Poll SCM" and pass the necessary Scheduling pattern.
